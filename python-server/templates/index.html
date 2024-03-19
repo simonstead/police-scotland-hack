@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='design-system.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='main.css') }}"
+    />
+    <title>Welcome Page</title>
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to Our Flask App</h1>
+      <p>OpenAI / ChatGPT was asked: What is service design. It said:</p>
+    </header>
+    <main>
+      <section>
+        {% if content %}
+        <p>{{ content }}</p>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>
