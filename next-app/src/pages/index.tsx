@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import Markdown from "react-markdown";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,52 +40,76 @@ export default function Home() {
   };
 
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <Formik
-          initialValues={{ message: "" }}
-          validate={(values) => {
-            const errors: any = {};
-            if (!values.message) {
-              errors.message = "Required";
-            }
-            return errors;
+    <>
+      <h1 style={{ margin: "0 auto", width: "fit-content" }}>
+        Incident report summarisation
+      </h1>
+      <main
+        className={`p-4 ${inter.className}`}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "2fr 3fr",
+          gridColumnGap: "2rem",
+        }}
+      >
+        <div>
+          <Formik
+            initialValues={{ message: "" }}
+            validate={(values) => {
+              const errors: any = {};
+              if (!values.message) {
+                errors.message = "Required";
+              }
+              return errors;
+            }}
+            onSubmit={onSubmit}
+          >
+            {({ isSubmitting }) => (
+              <Form>
+                <Field
+                  name="message"
+                  as="textarea"
+                  style={{
+                    padding: "1rem",
+                    border: "1px solid",
+                    width: "100%",
+                    height: 400,
+                  }}
+                />
+                <ErrorMessage name="message" component="div" />
+                <button
+                  type="submit"
+                  style={{
+                    margin: "1rem",
+                    background: "black",
+                    borderRadius: ".5rem",
+                    color: "white",
+                    padding: "1rem",
+                    fontSize: "1.5rem",
+                  }}
+                >
+                  {isSubmitting ? "Thinking..." : "Summarize"}
+                </button>
+              </Form>
+            )}
+          </Formik>
+        </div>
+        <div
+          style={{
+            maxWidth: 960,
+            // overflowY: "scroll",
+            // maxHeight: "80vh",
           }}
-          onSubmit={onSubmit}
         >
-          {({ isSubmitting }) => (
-            <Form>
-              <Field
-                name="message"
-                as="textarea"
-                style={{
-                  padding: "1rem",
-                  border: "1px solid",
-                  width: 800,
-                  height: 400,
-                }}
-              />
-              <ErrorMessage name="message" component="div" />
-              <button
-                type="submit"
-                style={{
-                  margin: "1rem",
-                  background: "black",
-                  borderRadius: ".5rem",
-                  color: "white",
-                  padding: "1rem",
-                  fontSize: "1.5rem",
-                }}
-              >
-                {isSubmitting ? "Thinking..." : "Summarize"}
-              </button>
-            </Form>
-          )}
-        </Formik>
-      </div>
-      <p>{response}</p>
-    </main>
+          <Markdown>{response}</Markdown>
+        </div>
+        {/* {response && (
+        <div>
+          <button>Do a thing</button>
+          <button>Do a thing</button>
+        </div>
+      )} */}
+      </main>
+    </>
   );
 }

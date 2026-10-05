@@ -25,6 +25,7 @@ services:
       FLASK_ENV: development
       DATABASE_URL: postgresql://user:password@db/flask_app
       OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_API_BASE: https://ed-tinkering-openai.openai.azure.com/
 
 volumes:
   postgres_data:

@@ -2,14 +2,16 @@
 from flask import Flask, request, jsonify, render_template, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 import os
-from openai import OpenAI
+from openai import AzureOpenAI
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 db = SQLAlchemy(app)
 
-client = OpenAI(
+client = AzureOpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
+    api_version="2023-12-01-preview",
+    azure_endpoint=os.environ.get("OPENAI_API_BASE")
 )
 
 @app.route("/")
